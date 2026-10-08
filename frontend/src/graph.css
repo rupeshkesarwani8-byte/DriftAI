@@ -1,0 +1,60 @@
+/* Impact graph (React Flow) */
+.ig-wrap { margin: 6px 0 22px; }
+.ig-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-bottom: 10px; font-size: 13px; color: #9a9aa5; }
+.ig-stats { color: #f2f2f5; font-weight: 600; }
+.ig-check { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.ig-check input { accent-color: #e11d2e; }
+.ig-legend { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
+.ig-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-left: 6px; }
+.ig-dot-high { background: #ff4d5a; box-shadow: 0 0 8px rgba(255,77,90,.8); }
+.ig-dot-medium { background: #ffbe5c; }
+.ig-dot-low { background: #6d6d78; }
+.ig-hint { padding: 10px 12px; margin-bottom: 10px; border-radius: 10px; border: 1px dashed rgba(255,255,255,.18); color: #9a9aa5; font-size: 13px; }
+.ig-note { margin: 8px 2px 0; font-size: 12px; color: #6d6d78; }
+
+.ig-flow {
+  width: 100%; border-radius: 16px; overflow: hidden; background: #09090c;
+  border: 1px solid rgba(255, 60, 70, .25); box-shadow: 0 16px 50px rgba(0,0,0,.5), 0 0 40px rgba(225,29,46,.08);
+}
+.ig-flow .react-flow { --xy-background-color: #09090c; --xy-edge-stroke-default: #6d6d78; }
+.ig-flow .react-flow__attribution { background: rgba(9,9,12,.7); color: #6d6d78; }
+.ig-flow .react-flow__attribution a { color: #9a9aa5; }
+.ig-flow .react-flow__controls { box-shadow: none; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; overflow: hidden; }
+.ig-flow .react-flow__controls-button { background: #15151a; border-bottom: 1px solid rgba(255,255,255,.08); fill: #f2f2f5; }
+.ig-flow .react-flow__controls-button:hover { background: #22222a; }
+
+/* nodes */
+.ig-flow .react-flow__node { width: 250px; transition: opacity .25s, filter .25s; }
+.ig-node {
+  position: relative; padding: 10px 12px; border-radius: 12px; text-align: left; font-family: Inter, system-ui, sans-serif;
+  background: linear-gradient(160deg, #1b1b22, #121217); border: 1px solid rgba(255,255,255,.1); color: #f2f2f5;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45); transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.react-flow__node:hover .ig-node { transform: translateY(-2px); border-color: rgba(255,77,90,.6); }
+.react-flow__node.ig-on .ig-node { border-color: #ff4d5a; box-shadow: 0 0 0 1px rgba(255,77,90,.5), 0 8px 26px rgba(225,29,46,.35); }
+.react-flow__node.ig-dim { opacity: .22; }
+.ig-tag { display: flex; align-items: center; gap: 5px; font-size: 10px; letter-spacing: .08em; font-weight: 700; color: #9a9aa5; margin-bottom: 4px; }
+.ig-title { font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ig-dir { color: #8a8a96; font-weight: 500; }
+.ig-sub { margin-top: 2px; font-size: 11.5px; color: #9a9aa5; font-family: "JetBrains Mono", monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ig-none { margin-top: 5px; font-size: 11px; color: #ff8a93; }
+.ig-change { border-color: rgba(255,77,90,.45); background: linear-gradient(160deg, #2a1015, #16090c); }
+.ig-change .ig-tag { color: #ff8a93; }
+.ig-fn.ig-c-high { border-left: 3px solid #ff4d5a; }
+.ig-fn.ig-c-medium { border-left: 3px solid #ffbe5c; }
+.ig-fn.ig-c-low { border-left: 3px solid #6d6d78; }
+.ig-conf { margin-left: auto; padding: 2px 7px; border-radius: 999px; font-size: 9.5px; }
+.ig-conf-high { background: rgba(225,29,46,.22); color: #ff6b76; }
+.ig-conf-medium { background: rgba(255,170,40,.2); color: #ffbe5c; }
+.ig-conf-low { background: rgba(255,255,255,.1); color: #9a9aa5; }
+.ig-handle { width: 8px; height: 8px; background: #ff4d5a; border: 0; }
+
+/* edges */
+.ig-flow .react-flow__edge-path { stroke: #6d6d78; stroke-width: 1.6; transition: opacity .25s; }
+.ig-flow .react-flow__edge.ig-e-high .react-flow__edge-path { stroke: #ff4d5a; stroke-width: 2.4; }
+.ig-flow .react-flow__edge.ig-e-medium .react-flow__edge-path { stroke: #ffbe5c; stroke-width: 2; }
+.ig-flow .react-flow__edge.ig-dim .react-flow__edge-path { opacity: .12; }
+.ig-flow .react-flow__edge.ig-on .react-flow__edge-path { stroke-width: 3; }
+
+@media (max-width: 760px) { .ig-legend { margin-left: 0; } }
+@media (prefers-reduced-motion: reduce) { .ig-flow .react-flow__node, .ig-node { transition: none; } }

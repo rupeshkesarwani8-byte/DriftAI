@@ -1,0 +1,50 @@
+/* Login / signup screens and the sidebar user box */
+.au {
+  position: fixed; inset: 0; overflow-y: auto; background: #07070a; color: #f2f2f5;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  font-family: Inter, system-ui, sans-serif;
+}
+.au-orb { position: fixed; border-radius: 50%; filter: blur(90px); opacity: .5; pointer-events: none; }
+.au-orb-a { width: 420px; height: 420px; background: #e11d2e; top: -120px; left: -100px; animation: au-float 14s ease-in-out infinite; }
+.au-orb-b { width: 360px; height: 360px; background: #7a0f1b; bottom: -120px; right: -80px; animation: au-float 17s ease-in-out infinite reverse; }
+@keyframes au-float { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px, 30px); } }
+
+.au-card {
+  position: relative; width: 100%; max-width: 420px; padding: 32px 30px;
+  background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.015));
+  border: 1px solid rgba(255, 60, 70, .25); border-radius: 20px; backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.55), 0 0 40px rgba(225,29,46,.12);
+  animation: au-in .5s ease both;
+}
+@keyframes au-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.au-brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 20px; color: #fff; text-decoration: none; margin-bottom: 18px; }
+.au-brand b { color: #ff4d5a; font-weight: inherit; }
+.au-mark { width: 14px; height: 14px; border-radius: 4px; background: linear-gradient(135deg,#e11d2e,#ff4d5a); box-shadow: 0 0 14px rgba(225,29,46,.8); }
+.au-card h1 { margin: 0 0 6px; font-size: 24px; }
+.au-sub { margin: 0 0 20px; color: #9a9aa5; font-size: 14px; }
+.au-field { display: block; margin-bottom: 14px; }
+.au-field > span { display: block; font-size: 12px; color: #9a9aa5; margin-bottom: 6px; letter-spacing: .04em; }
+.au-input {
+  display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 10px;
+  background: #09090c; border: 1px solid rgba(255,255,255,.1); color: #9a9aa5; transition: border-color .2s, box-shadow .2s;
+}
+.au-input:focus-within { border-color: #e11d2e; box-shadow: 0 0 0 3px rgba(225,29,46,.18); color: #ff4d5a; }
+.au-input input { flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: #f2f2f5; padding: 12px 0; font-size: 14px; }
+.au-eye { background: transparent; border: 0; color: inherit; cursor: pointer; display: flex; padding: 4px; }
+.au-error { background: rgba(225,29,46,.12); border: 1px solid rgba(225,29,46,.45); color: #ff8a93; padding: 10px 12px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; }
+.au-btn {
+  width: 100%; margin-top: 4px; padding: 12px; border: 0; border-radius: 10px; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer;
+  background: linear-gradient(135deg, #e11d2e, #ff4d5a); box-shadow: 0 8px 24px rgba(225,29,46,.35); transition: transform .15s, opacity .15s;
+}
+.au-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.au-btn:disabled { opacity: .5; cursor: not-allowed; }
+.au-switch { text-align: center; margin: 18px 0 0; font-size: 13px; color: #9a9aa5; }
+.au-switch a { color: #ff4d5a; text-decoration: none; font-weight: 600; }
+
+/* Sidebar user box (inside the app) */
+.sidebar-user { margin: auto 0 10px; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
+.sidebar-user .su-name { font-weight: 700; font-size: 14px; color: #f2f2f5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-user .su-mail { font-size: 12px; color: #9a9aa5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 8px; }
+.sidebar-user button { display: flex; align-items: center; gap: 6px; width: 100%; justify-content: center; padding: 7px; border-radius: 8px; border: 1px solid rgba(225,29,46,.4); background: transparent; color: #ff8a93; cursor: pointer; font-size: 13px; }
+.sidebar-user button:hover { background: rgba(225,29,46,.12); }
+.boot { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #07070a; color: #9a9aa5; font-family: Inter, system-ui, sans-serif; }

@@ -1,0 +1,21 @@
+/* DriftAI logo (sidebar) + fixed sidebar */
+.logo { display: inline-flex; align-items: center; gap: 12px; color: #fff; }
+.logo-mark { filter: drop-shadow(0 0 12px rgba(225,29,46,.6)); flex: none; transition: transform .25s ease, filter .25s ease; }
+.logo:hover .logo-mark { transform: translateX(3px) scale(1.07); filter: drop-shadow(0 0 18px rgba(255,77,90,.9)); }
+.logo-words { display: flex; flex-direction: column; line-height: 1; }
+.logo-text { font-family: "Space Grotesk", "Sora", Inter, system-ui, sans-serif; font-weight: 800; font-size: 31px; letter-spacing: -.035em; color: #fff; text-shadow: 0 2px 18px rgba(255,255,255,.12); }
+.logo-text b { font-weight: 800; background: linear-gradient(135deg, #ff6b76 0%, #e11d2e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 10px rgba(225,29,46,.45)); }
+.logo-tag { margin-top: 6px; font-size: 8.5px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: #8a8a95; white-space: nowrap; }
+
+/* The old ".brand span" shine effect must not touch the new logo */
+.brand .logo, .brand .logo-words, .brand .logo-text, .brand .logo-tag { background: none; animation: none; -webkit-background-clip: border-box; background-clip: border-box; }
+.brand .logo-text { color: #fff; }
+.brand .logo-tag { color: #8a8a95; }
+.brand { margin-bottom: 30px; }
+
+/* Sidebar stays in place while the page scrolls.
+   .shell had "overflow: hidden", which stops position: sticky from working; "clip" hides the same way without that side effect. */
+.shell { overflow: clip; }
+.sidebar { align-self: flex-start; max-height: 100vh; box-sizing: border-box; overflow-y: auto; }
+.sidebar .sidebar-user { margin-top: auto; }
+.sidebar .sidebar-foot { margin-top: 10px; }

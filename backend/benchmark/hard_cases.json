@@ -1,0 +1,32 @@
+[
+ {"id": 1, "old": "The connection pool does not block when it is full (False).",
+  "new": "The connection pool blocks when it is full (True).",
+  "entity": "connection pool", "property": "block", "old_value": "False",
+  "expected": ["adapters.py::DEFAULT_POOLBLOCK"]},
+
+ {"id": 2, "old": "The default pool timeout is None.",
+  "new": "The default pool timeout is 5 seconds.",
+  "entity": "connection pool", "property": "timeout", "old_value": "None",
+  "expected": ["adapters.py::DEFAULT_POOL_TIMEOUT"]},
+
+ {"id": 3, "old": "After a 303 See Other redirect the request method changes to GET.",
+  "new": "After a 303 See Other redirect the request method stays unchanged.",
+  "entity": "redirect", "property": "request method", "old_value": "303",
+  "expected": ["sessions.py::SessionRedirectMixin.rebuild_method"]},
+
+ {"id": 4, "old": "The Authorization header is removed when a redirect goes to another host.",
+  "new": "The Authorization header is kept when a redirect goes to another host.",
+  "entity": "authorization header", "property": "redirect host", "old_value": "removed",
+  "expected": ["sessions.py::SessionRedirectMixin.should_strip_auth", "sessions.py::SessionRedirectMixin.rebuild_auth"]},
+
+ {"id": 5, "old": "Proxy settings are rebuilt on every redirect.",
+  "new": "Proxy settings are rebuilt only once per request.",
+  "entity": "proxy", "property": "redirect", "old_value": "every redirect",
+  "expected": ["sessions.py::SessionRedirectMixin.rebuild_proxies"]},
+
+ {"id": 6, "old": "A client may send at most 100 requests per minute.",
+  "new": "A client may send at most 50 requests per minute.",
+  "entity": "rate limit", "property": "requests per minute", "old_value": "100",
+  "expected": [],
+  "note": "this library has no rate limiter, so no HIGH match should come"}
+]

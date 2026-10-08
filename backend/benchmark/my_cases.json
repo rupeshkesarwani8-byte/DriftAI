@@ -1,0 +1,28 @@
+[
+ {"id": 1, "old": "Response bodies are read in chunks of 10240 bytes.",
+  "new": "Response bodies are read in chunks of 20480 bytes.",
+  "entity": "response body", "property": "chunk size", "old_value": "10240",
+  "expected": ["models.py::CONTENT_CHUNK_SIZE"]},
+
+ {"id": 2, "old": "Streaming iteration reads 512 bytes at a time.",
+  "new": "Streaming iteration reads 1024 bytes at a time.",
+  "entity": "streaming iteration", "property": "chunk size", "old_value": "512",
+  "expected": ["models.py::ITER_CHUNK_SIZE"]},
+
+ {"id": 3, "old": "The default port for https is 443.",
+  "new": "The default port for https is 8443.",
+  "entity": "https", "property": "default port", "old_value": "443",
+  "expected": ["utils.py::DEFAULT_PORTS"]},
+
+ {"id": 4, "old": "Users must verify with an OTP that expires in 15 minutes.",
+  "new": "Users must verify with an OTP that expires in 5 minutes.",
+  "entity": "OTP", "property": "expiry", "old_value": "15 minutes",
+  "expected": [],
+  "note": "requests library has no OTP, so no HIGH match should come"},
+
+ {"id": 5, "old": "Maximum upload size is 5 MB.",
+  "new": "Maximum upload size is 10 MB.",
+  "entity": "upload", "property": "maximum size", "old_value": "5 MB",
+  "expected": [],
+  "note": "no such limit in this library"}
+]

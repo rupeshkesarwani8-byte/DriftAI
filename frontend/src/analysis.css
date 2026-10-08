@@ -1,0 +1,39 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 22px;
+}
+
+.req-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.req-label {
+  color: #9a9aa8;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.req-text {
+  margin: 8px 0 0;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  color: #cfcfda;
+  font-family: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 680px) {
+  .req-grid {
+    grid-template-columns: 1fr;
+  }
+}

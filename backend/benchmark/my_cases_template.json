@@ -1,0 +1,17 @@
+[
+ {"id": 1,
+  "old": "Write the OLD requirement sentence here.",
+  "new": "Write the NEW requirement sentence here.",
+  "entity": "what the rule is about, e.g. session",
+  "property": "which attribute, e.g. timeout",
+  "old_value": "the old number with unit, e.g. 30 minutes",
+  "expected": ["file.py::NAME_OR_FUNCTION", "file.py::Class.method"]},
+ {"id": 2,
+  "old": "A requirement that is NOT implemented anywhere.",
+  "new": "The same requirement with a changed number.",
+  "entity": "something the code does not have",
+  "property": "duration",
+  "old_value": "15 minutes",
+  "expected": [],
+  "note": "empty expected = pass only if no HIGH confidence match is returned"}
+]

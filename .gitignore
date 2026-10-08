@@ -1,0 +1,20 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node
+node_modules/
+dist/
+
+# Local data and secrets (never upload these)
+backend/driftai.db
+backend/users.db
+backend/.driftai_secret
+backend/benchmark/requests_repo/
+.env
+*.db
+*.db.bak
+*.bak

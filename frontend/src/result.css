@@ -1,0 +1,177 @@
+/* ---------- Risk card ---------- */
+.risk-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.risk-ring {
+  --pct: 0%;
+  --c: #ff3b47;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: conic-gradient(var(--c) var(--pct), rgba(255, 255, 255, 0.08) 0);
+  box-shadow: 0 0 40px -10px var(--c);
+}
+
+.risk-ring.low {
+  --c: #3ddc97;
+}
+
+.risk-ring.medium {
+  --c: #ffbe46;
+}
+
+.risk-ring.high {
+  --c: #ff3b47;
+}
+
+.risk-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: #0e0e13;
+}
+
+.risk-inner strong {
+  font-family: var(--display);
+  font-size: 32px;
+  line-height: 1;
+}
+
+.risk-inner span {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.risk-card h2 {
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-size: 19px;
+}
+
+.risk-level {
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.risk-level.low {
+  color: #3ddc97;
+}
+
+.risk-level.medium {
+  color: #ffbe46;
+}
+
+.risk-level.high {
+  color: #ff3b47;
+}
+
+.reasons {
+  margin: 0 0 10px;
+  padding-left: 18px;
+  color: #cfcfda;
+  font-size: 13.5px;
+}
+
+.reasons li {
+  margin-bottom: 5px;
+}
+
+/* ---------- Plan rows: confidence + feedback ---------- */
+.plan-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.plan-row .check {
+  flex: 1;
+}
+
+.conf {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.conf.high {
+  background: rgba(61, 220, 151, 0.14);
+  color: #3ddc97;
+}
+
+.conf.medium {
+  background: rgba(255, 190, 70, 0.14);
+  color: #ffbe46;
+}
+
+.conf.low {
+  background: rgba(255, 255, 255, 0.08);
+  color: #b4b4c0;
+}
+
+.reason {
+  margin: 6px 0 0 29px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.feedback {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+.fb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.fb-btn:hover {
+  transform: translateY(-2px);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.fb-btn.good.active {
+  background: rgba(61, 220, 151, 0.14);
+  border-color: #3ddc97;
+  color: #3ddc97;
+}
+
+.fb-btn.bad.active {
+  background: rgba(255, 59, 71, 0.14);
+  border-color: #ff3b47;
+  color: #ff3b47;
+}
+
+@media (max-width: 680px) {
+  .risk-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
