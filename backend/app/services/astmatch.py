@@ -407,16 +407,25 @@ def confidence_of(score: float) -> str:
 
 
 def rank_units(units: list[Unit], entity: str, prop: str, old_value: str,
-               top_k: int = 5, min_score: float = 0.0, **flags) -> list[Match]:
+               top_k: int = 5, min_score: float = 0.0, query_text: str = "", **flags) -> list[Match]:
     use_syn = flags.get("use_synonyms", True)
+    use_meaning = flags.pop("use_meaning", True)
     query = text_to_stems(f"{entity} {prop}", use_syn)
     literal_set, notes = literal_numbers(old_value)
     word_lits = literal_words(old_value)
+    sem = None
+    if use_meaning and query_text.strip():
+        from app.services.embed import semantic_scores   # optional: None when no model is installed
+        sem = semantic_scores(units, f"{entity} {prop}. {query_text}", flags.pop("embedder", None))
+    flags.pop("embedder", None)
     matches: list[Match] = []
     weights = word_weights(units, query, use_syn) if flags.get("use_weights", True) else None
     flags = {k: v for k, v in flags.items() if k != "use_weights"}
-    for u in units:
+    for i, u in enumerate(units):
         s, why = score_unit(u, query, literal_set, notes, word_literals=word_lits, weights=weights, **flags)
+        if sem is not None and sem[i][0] > 0:
+            s += sem[i][0]
+            why = why + [f"similar meaning to the requirement (similarity {sem[i][1]:.2f})"]
         if s > 0 and s >= min_score:
             matches.append(Match(u, round(s, 1), confidence_of(s), why))
     matches.sort(key=lambda m: (-m.score, m.unit.path, m.unit.start))

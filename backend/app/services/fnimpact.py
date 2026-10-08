@@ -43,7 +43,9 @@ def functions_for_changes(units, changes, top_k: int = 5) -> list[dict]:
         prop = str(get_field(ch, "property", "prop"))
         old_v = str(get_field(ch, "old_value", "old"))
         new_v = str(get_field(ch, "new_value", "new"))
-        ranked = rank_units(units, entity, prop, old_v, top_k=top_k * 4)
+        # the old sentence describes what the existing code does, so it is the text used for meaning-matching
+        sentence = str(get_field(ch, "old_sentence", "new_sentence"))
+        ranked = rank_units(units, entity, prop, old_v, top_k=top_k * 4, query_text=sentence)
         strong = [m for m in ranked if m.score >= STRONG_SCORE][:top_k]
         weak = [m for m in ranked if m.score < STRONG_SCORE][:top_k]
         out.append({

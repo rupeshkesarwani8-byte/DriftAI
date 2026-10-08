@@ -34,10 +34,13 @@ def load_repo(repo: Path):
     return files
 
 
-def run(units, cases, k, min_score=0.0, **flags):
+def run(units, cases, k, min_score=0.0, meaning=False, **flags):
     hits, rows, top1 = 0, [], [0]
     for c in cases:
-        top = rank_units(units, c["entity"], c["property"], c["old_value"], top_k=k, min_score=min_score, **flags)
+        # meaning mode: the old sentence is what the existing code implements, so it is the search text
+        qt = c.get("old", "") if meaning else ""
+        top = rank_units(units, c["entity"], c["property"], c["old_value"], top_k=k, min_score=min_score,
+                         query_text=qt, use_meaning=meaning, **flags)
         found = [f"{m.unit.path}::{m.unit.qualname}" for m in top]
         if c["expected"]:
             ok = any(e in found for e in c["expected"])
@@ -47,7 +50,7 @@ def run(units, cases, k, min_score=0.0, **flags):
         if c["expected"] and found and found[0] in c["expected"]:
             top1[0] += 1
         rows.append((c["id"], ok, found))
-    return hits, rows, top1[0]
+    return hits, rows, top1[0]              
 
 
 def main():
@@ -67,6 +70,12 @@ def main():
         "baseline (names/words only)": dict(use_literals=False, use_synonyms=False, use_constants=False),
         "full (AST + literals + synonyms)": dict(),
     }
+
+    from app.services.embed import get_embedder
+    if get_embedder() is not None:
+        modes["full + meaning (embeddings)"] = dict(meaning=True)
+    else:
+        print("(embeddings not available: install fastembed or sentence-transformers to see the 'meaning' row)\n")
     for label, flags in modes.items():
         hits, rows, top1 = run(units, cases, a.k, a.min_score, **flags)
         labelled = sum(1 for c in cases if c["expected"])
