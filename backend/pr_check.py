@@ -27,7 +27,7 @@ from app.services.drift import detect_drift  # noqa: E402
 
 MARKER = "<!-- driftai-pr-comment -->"
 CODE_SUFFIXES = {".py", ".js", ".jsx", ".ts", ".tsx"}
-SKIP_DIRS = {".git", ".driftai", "node_modules", "venv", ".venv", "__pycache__", "dist", "build", "benchmark", "tests", "test"}
+SKIP_DIRS = {".git", ".driftai", "samples", "node_modules", "venv", ".venv", "__pycache__", "dist", "build", "benchmark", "tests", "test"}
 DEFAULT_REQ = "REQUIREMENTS.md,docs/requirements*.md,docs/REQUIREMENTS*.md"
 MAX_FILES = 400
 MAX_CHANGES = 8

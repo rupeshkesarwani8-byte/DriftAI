@@ -80,6 +80,22 @@ python benchmark/run_benchmark.py --repo benchmark/requests_repo --cases benchma
 | pallets/click | 16 | 11/16 | 9/14 with meaning, 8/14 without |
 
 Recall@5 means the correct function is inside the top 5. A requirement with no matching code (a negative case) counts as correct only when no high-confidence match is returned.
+  
+
+## Pull request check (GitHub Action)
+
+When a pull request changes `REQUIREMENTS.md` (or `docs/requirements*.md`), a GitHub Action runs
+`backend/pr_check.py`. It compares the old and new text, finds what changed, and posts a comment
+on the pull request listing the functions that probably need updating, with confidence and reason.
+It needs no server, token or database: the workflow uses GitHub's own built-in token.
+
+Try it by hand in any git repository:
+
+    python backend/pr_check.py --base main --head HEAD --repo .
+
+Limits: it only reads Markdown requirement files (change the list with `DRIFTAI_REQ_FILES`),
+pull requests from forks cannot receive comments (the result still appears in the job summary),
+and the matches are a checklist of places to look, not proof.
 
 ## Accuracy
 
