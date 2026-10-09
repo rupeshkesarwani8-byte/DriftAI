@@ -67,3 +67,15 @@ def test_env_switch_turns_the_model_off(monkeypatch):
     monkeypatch.setenv("DRIFTAI_EMBEDDINGS", "off")
     embed._embedder, embed._tried = None, False
     assert embed.get_embedder() is None
+
+
+
+def test_meaning_cannot_lift_a_medium_match_to_high(monkeypatch):
+    src = "def remove_header(x):\n    \"\"\"Remove the authorization header.\"\"\"\n    return x\n"
+    units = build_index([("m.py", src)])
+    args = ("authorization header", "removed", "x")
+    base = rank_units(units, *args, query_text="", use_meaning=False)[0]
+    assert 4.0 <= base.score < 8                      # medium without meaning
+    monkeypatch.setattr(embed, "semantic_scores", lambda u, q, e=None: [(3.5, 0.9)] * len(u))
+    top = rank_units(units, *args, query_text="Authorization header is removed")[0]
+    assert top.score > base.score and top.confidence == "medium"

@@ -398,12 +398,12 @@ def score_unit(unit: Unit, query: set[str], literal_set: set[float], notes: list
         reasons.append("uses constant: " + ", ".join(unit.used_constants))
     return score, reasons
 
-
+HIGH_SCORE = 8.0       # at or above this the confidence is "high"
 STRONG_SCORE = 4.0     # at or above this a match is shown as a real suggestion (medium/high)
 
 
 def confidence_of(score: float) -> str:
-    return "high" if score >= 8 else "medium" if score >= STRONG_SCORE else "low"
+    return "high" if score >= HIGH_SCORE else "medium" if score >= STRONG_SCORE else "low"
 
 
 def rank_units(units: list[Unit], entity: str, prop: str, old_value: str,
@@ -424,7 +424,7 @@ def rank_units(units: list[Unit], entity: str, prop: str, old_value: str,
     for i, u in enumerate(units):
         s, why = score_unit(u, query, literal_set, notes, word_literals=word_lits, weights=weights, **flags)
         if sem is not None and sem[i][0] > 0:
-            s += sem[i][0]
+            s = s + sem[i][0] if s >= 8.0 else min(s + sem[i][0], 7.9)
             why = why + [f"similar meaning to the requirement (similarity {sem[i][1]:.2f})"]
         if s > 0 and s >= min_score:
             matches.append(Match(u, round(s, 1), confidence_of(s), why))
