@@ -63,27 +63,44 @@ Open http://localhost:5173
 
 ```
 cd backend
-pytest -v          # 63 tests
+pytest -v          # 69 tests
 python benchmark/run_benchmark.py
 python benchmark/run_benchmark.py --repo benchmark/requests_repo --cases benchmark/requests_cases.json
 python benchmark/run_benchmark.py --repo benchmark/requests_repo --cases benchmark/hard_cases.json
 ```
 
-## Benchmark (small, written by the author)
+## Benchmark sets
 
 | Set | Cases | Recall@5 | Rank-1 correct |
 |---|---|---|---|
 | Mini repo | 12 | 12/12 | 11/11 |
 | psf/requests | 9 | 9/9 | 8/8 |
-| psf/requests, hard (behaviour-style) | 6 | 6/6 | 2/5 |
+| psf/requests, hard (behaviour-style) | 6 | 6/6 | 4/5 with meaning, 2/5 without |
+| pallets/flask | 16 | 16/16 | 11/14 with meaning, 12/14 without |
+| pallets/click | 16 | 11/16 | 9/14 with meaning, 8/14 without |
 
-Recall@5 means the correct function is inside the top 5. The "baseline" mode (names and words only) scores lower on the same cases, which is why numbers, synonyms and constants are used.
-A requirement with no matching code (a negative case) counts as correct only when no high-confidence match is returned.
+Recall@5 means the correct function is inside the top 5. A requirement with no matching code (a negative case) counts as correct only when no high-confidence match is returned.
+
+## Accuracy
+
+Tested on 47 requirement changes across three real projects (psf/requests, pallets/flask, pallets/click).
+Each case has a hand-checked correct function; some cases have no code on purpose.
+
+| Mode | Correct function is #1 (41 labelled cases) | Correct function in top 5 (47 cases) |
+|---|---|---|
+| Names/words only | 28 (68%) | 41 (87%) |
+| + AST, literals, synonyms | 30 (73%) | 43 (91%) |
+| + meaning (optional embeddings) | 32 (78%) | 42 (89%) |
+
+Limits: cases were written by the author, one rule was changed after seeing results,
+and meaning-matching helps when wording differs but can add a wrong suggestion elsewhere.
+Reproduce: `python benchmark/run_benchmark.py --repo benchmark/flask_repo --cases benchmark/flask_cases.json`
+
 
 ## Known limitations
 
-- The matcher is **heuristic** (names, comments, numbers, synonyms). It has no real understanding of meaning.
-- Behaviour-style requirements often rank the right function 2nd to 4th, not 1st.
+-- The matcher is **heuristic** (names, comments, numbers, synonyms). Optional embeddings add meaning-based matching, but they can also suggest a wrong function.
+- Behaviour-style requirements often rank the right function 2nd to 4th, not 1st. On pallets/click only 12 of 16 cases find the right function in the top 5.
 - The benchmarks are small and were written by the author, so they are an indication, not proof.
 - Only functions and module-level constants are indexed. JS/TS indexing is approximate.
 - Public repositories only. The GitHub API is unauthenticated, so it is rate limited.
