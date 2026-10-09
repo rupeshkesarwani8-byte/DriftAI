@@ -18,3 +18,6 @@ backend/benchmark/requests_repo/
 *.db
 *.db.bak
 *.bak
+
+backend/benchmark/flask_repo/
+backend/benchmark/click_repo/
