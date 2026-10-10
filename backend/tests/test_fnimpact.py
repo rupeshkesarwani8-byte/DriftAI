@@ -33,3 +33,15 @@ def test_no_match_returns_empty_lists():
     out = functions_for_changes(units, [SimpleNamespace(entity="delivery fee", property="waived above",
                                                         old_value="999 rupees", new_value="1499 rupees")])
     assert out[0]["matches"] == []
+
+def test_analyze_style_nested_change_is_read():
+    from app.services.astmatch import build_index
+    src = "MAX_DISCOUNT_PERCENT = 20\n\ndef apply_discount(price, percent):\n    \"\"\"Apply a discount to the price.\"\"\"\n    return price\n"
+    units = build_index([("shop.py", src)])
+    changes = [{"change": {"type": "value_change", "entity": "discount", "property": "%",
+                           "old_value": "20%", "new_value": "30%",
+                           "old_sentence": "The maximum discount is 20 percent.",
+                           "new_sentence": "The maximum discount is 30 percent."}, "files": []}]
+    out = functions_for_changes(units, changes)
+    assert out[0]["entity"] == "discount"
+    assert out[0]["matches"] or out[0]["weak_matches"]

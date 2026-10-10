@@ -34,7 +34,8 @@ def build_full_markdown(analysis_id: int, project_name: str, created, result: di
     else:
         lines.append("| Entity | Property | Old | New |")
         lines.append("|---|---|---|---|")
-        for ch in changes:
+        for item in changes:
+            ch = item.get("change", item) if isinstance(item, dict) else item
             lines.append("| {} | {} | {} | {} |".format(
                 _cell(get_field(ch, "entity", default="-")),
                 _cell(get_field(ch, "property", "prop", default="-")),

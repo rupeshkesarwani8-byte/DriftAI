@@ -38,7 +38,10 @@ def match_to_dict(m: Match) -> dict:
 def functions_for_changes(units, changes, top_k: int = 5) -> list[dict]:
     """For every change return strong matches (medium/high) and, separately, weak ones."""
     out = []
-    for ch in changes:
+    for raw in changes:
+        # saved analyses store each change as {"change": {...}, "files": [...]}
+        inner = raw.get("change") if isinstance(raw, dict) else None
+        ch = inner if isinstance(inner, dict) else raw
         entity = str(get_field(ch, "entity"))
         prop = str(get_field(ch, "property", "prop"))
         old_v = str(get_field(ch, "old_value", "old"))
