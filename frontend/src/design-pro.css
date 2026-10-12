@@ -1,0 +1,96 @@
+/* DriftAI design-pro.css
+   A calm, readable polish layer on top of App.css (dark OLED style, same black/red brand).
+   To undo everything: delete the line  import "./design-pro.css";  from main.jsx. */
+
+/* ---------- Optional font switch (off by default) ----------
+   To use IBM Plex Sans for text, remove the comment marks around the next 3 lines.
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+body { font-family: "IBM Plex Sans", "Inter", system-ui, sans-serif; }
+---------------------------------------------------------------- */
+
+:root {
+  --muted: #a3a3b1;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- 1. Calmer background ---------- */
+.shell::before { animation: none; }
+.bg-orb { animation: none; opacity: 0.26; }
+.brand span { animation: none; background-position: 0 center; }
+.brand-mark { animation-duration: 4.5s; }
+.stat { animation: none; }
+.btn { animation: none; background-size: 100% 100%; }
+.progress-bar { animation: none; }
+.dropzone svg { animation: none; }
+.badge::before { animation: none; }
+
+/* ---------- 2. Gentler hover motion ---------- */
+.nav-link:hover { transform: translateX(2px); }
+.nav-link:hover svg { transform: scale(1.08); }
+.stat:hover { transform: translateY(-2px); }
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.row:hover { transform: none; }
+.card { transition-duration: 0.2s; }
+.page > *, .result > * { animation-duration: 0.35s; }
+
+/* ---------- 3. Keyboard focus that can be seen ---------- */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+select:focus-visible,
+.nav-link:focus-visible,
+.btn:focus-visible,
+.dropzone:focus-visible,
+.check input:focus-visible {
+  outline: 2px solid var(--red-light);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* ---------- 4. Clickable things look clickable ---------- */
+button, summary, .nav-link, .btn, select, .dropzone, label.check { cursor: pointer; }
+button:disabled, .btn:disabled { cursor: not-allowed; }
+
+/* ---------- 5. Readable numbers and text ---------- */
+.stat-value, .change-value, .pl-chip b, .score { font-variant-numeric: tabular-nums; }
+.sidebar-foot { color: #80808c; }
+.plan li.done .check span { color: #8a8a96; }
+.page-head h1 { font-size: clamp(28px, 4.2vw, 38px); }
+.page-head p { max-width: 62ch; }
+.card-head h2 { font-size: clamp(17px, 2.4vw, 19px); }
+.btn { min-height: 42px; }
+.btn-sm { min-height: 36px; }
+
+/* ---------- 6. Phones and small windows ---------- */
+@media (max-width: 860px) {
+  .sidebar { flex-wrap: wrap; row-gap: 8px; padding: 10px 14px; }
+  .brand { margin: 0 auto 0 0; }
+  .sidebar-user { order: 2; display: flex; align-items: center; gap: 8px; margin: 0; }
+  .sidebar-user .su-name { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+  .sidebar-user .su-mail { display: none; }
+  .nav {
+    order: 3; width: 100%; gap: 4px;
+    overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-link { flex: 0 0 auto; white-space: nowrap; padding: 9px 12px; }
+  .nav-link:hover { transform: none; }
+  .stat { padding: 16px 14px; }
+  .stat-value { font-size: 26px; }
+}
+
+@media (max-width: 560px) {
+  .page { padding: 22px 14px 60px; }
+  .card { padding: 18px 16px; }
+  .row > :first-child { min-width: 0; }
+  .nav-link { gap: 8px; font-size: 13.5px; }
+}
+
+/* ---------- 7. Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .page > *, .result > *, .row, .list li, .plan li { animation: none !important; }
+}
+.pl-strip { justify-content: flex-start; }
+@media (max-width: 860px) {
+  .pl-strip { padding-left: 16px; padding-right: 16px; }
+}
