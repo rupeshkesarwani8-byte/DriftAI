@@ -1,0 +1,17 @@
+/* Build 13: suggested edits */
+.ps-section { margin-top: 28px; }
+.ps-section h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; }
+.ps-note { margin: 0 0 14px; color: #9a9aa5; font-size: 13px; }
+.ps-change { margin-bottom: 16px; padding: 16px 18px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 14px; }
+.ps-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
+.ps-title { font-weight: 600; }
+.ps-pill { padding: 3px 10px; background: rgba(255, 59, 71, 0.12); border: 1px solid rgba(255, 59, 71, 0.3); border-radius: 999px; color: #ffc2c6; font-family: "JetBrains Mono", monospace; font-size: 12px; }
+.ps-copy { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 10px; color: #f1f1f5; font: inherit; font-size: 12.5px; cursor: pointer; }
+.ps-copy:hover { border-color: #ff3b47; }
+.ps-edit { margin-top: 10px; }
+.ps-where { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 6px; font-family: "JetBrains Mono", monospace; font-size: 12px; color: #9a9aa5; }
+.ps-diff { overflow-x: auto; background: rgba(0, 0, 0, 0.5); border-radius: 10px; font-family: "JetBrains Mono", monospace; font-size: 12.5px; }
+.ps-del, .ps-add { padding: 5px 12px; white-space: pre; }
+.ps-del { background: rgba(255, 59, 71, 0.13); color: #ff9aa1; }
+.ps-add { background: rgba(61, 220, 151, 0.12); color: #8eebc0; }
+.ps-small { margin: 6px 0 0; color: #9a9aa5; font-size: 12.5px; }

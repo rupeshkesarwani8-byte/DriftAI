@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Braces, Download, Network } from "lucide-react";
 import MatchList from "./MatchList";
+import PatchSuggestions from "./PatchSuggestions";
 import "../functions.css";
 
 // React Flow is loaded only when an analysis page is opened, so the other pages stay light.
@@ -57,9 +58,10 @@ export default function FunctionMatches() {
               </Suspense>
             </>
           )}
-          {data.changes.map((c, i) => (
+                    {data.changes.map((c, i) => (
             <MatchList key={i} change={c} />
           ))}
+          {data.changes.length > 0 && <PatchSuggestions id={id} />}
         </>
       )}
     </div>

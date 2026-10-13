@@ -9,6 +9,7 @@ from app.models import Analysis, Project
 from app.services.astmatch import build_index
 from app.services.fnimpact import file_pairs, functions_for_changes
 from app.services.full_report import build_full_markdown
+from app.services.patches import suggest_patches
 
 router = APIRouter(tags=["analyses"])
 
@@ -38,3 +39,8 @@ def full_report(analysis_id: int, db: Session = Depends(get_db)):
     text = build_full_markdown(a.id, name, a.created_at, result, items)
     return Response(content=text, media_type="text/markdown; charset=utf-8",
                     headers={"Content-Disposition": f'attachment; filename="driftai-analysis-{a.id}-full.md"'})
+
+@router.get("/analyses/{analysis_id}/patches")
+def analysis_patches(analysis_id: int, db: Session = Depends(get_db)):
+    _, _, units, items = _load(db, analysis_id, 5)
+    return {"changes": suggest_patches(units, items)}
