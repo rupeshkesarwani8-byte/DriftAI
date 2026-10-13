@@ -15,3 +15,10 @@
 .ps-del { background: rgba(255, 59, 71, 0.13); color: #ff9aa1; }
 .ps-add { background: rgba(61, 220, 151, 0.12); color: #8eebc0; }
 .ps-small { margin: 6px 0 0; color: #9a9aa5; font-size: 12.5px; }
+
+
+/* Build 14: tests to run */
+.ps-test { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin-top: 8px; font-size: 13px; }
+.ps-test code { padding: 2px 8px; background: rgba(255, 255, 255, 0.07); border-radius: 6px; font-family: "JetBrains Mono", monospace; font-size: 12.5px; }
+.ps-why { color: #9a9aa5; font-size: 12.5px; }
+.ps-cmd { margin-top: 10px; padding: 8px 12px; overflow-x: auto; background: rgba(0, 0, 0, 0.5); border-radius: 10px; font-family: "JetBrains Mono", monospace; font-size: 12.5px; white-space: pre; color: #cfcfda; }

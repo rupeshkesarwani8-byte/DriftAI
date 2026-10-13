@@ -58,7 +58,7 @@ function AppShell() {
             <LogOut size={14} /> Log out
           </button>
         </div>
-        <div className="sidebar-foot">v0.13 · MVP</div>
+        <div className="sidebar-foot">v0.14 · MVP</div>
       </aside>
 
       <main className="content">

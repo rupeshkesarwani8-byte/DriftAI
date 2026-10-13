@@ -63,7 +63,7 @@ Open http://localhost:5173
 
 ```
 cd backend
-pytest -v          # 81 tests
+pytest -v          # 86 tests
 python benchmark/run_benchmark.py
 python benchmark/run_benchmark.py --repo benchmark/requests_repo --cases benchmark/requests_cases.json
 python benchmark/run_benchmark.py --repo benchmark/requests_repo --cases benchmark/hard_cases.json
@@ -104,6 +104,15 @@ When a requirement change swaps one number for another (for example 20% to 30%),
 - Unit conversions are handled: a change from 10 minutes to 5 minutes turns `OTP_SECONDS = 600` into `300`.
 - It never edits your files. It only suggests.
 - It suggests edits only for strong (medium or high) matches. If no strong match is found, or the unit changed, it says so instead of guessing.
+
+### Tests to run
+
+For every requirement change, DriftAI lists the tests you should run again:
+
+- tests that match the requirement directly
+- tests that use a function or constant matched for that change
+
+Each test comes with the reason it was picked and a ready `pytest` command you can copy. DriftAI only reads your code. It never runs your tests and never edits your files.
 
 ## Accuracy
 

@@ -10,6 +10,7 @@ from app.services.astmatch import build_index
 from app.services.fnimpact import file_pairs, functions_for_changes
 from app.services.full_report import build_full_markdown
 from app.services.patches import suggest_patches
+from app.services.testlink import suggest_tests
 
 router = APIRouter(tags=["analyses"])
 
@@ -44,3 +45,8 @@ def full_report(analysis_id: int, db: Session = Depends(get_db)):
 def analysis_patches(analysis_id: int, db: Session = Depends(get_db)):
     _, _, units, items = _load(db, analysis_id, 5)
     return {"changes": suggest_patches(units, items)}
+
+@router.get("/analyses/{analysis_id}/tests")
+def analysis_tests(analysis_id: int, db: Session = Depends(get_db)):
+    _, _, units, items = _load(db, analysis_id, 5)
+    return {"changes": suggest_tests(units, items)}
