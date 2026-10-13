@@ -63,7 +63,7 @@ Open http://localhost:5173
 
 ```
 cd backend
-pytest -v          # 69 tests
+pytest -v          # 81 tests
 python benchmark/run_benchmark.py
 python benchmark/run_benchmark.py --repo benchmark/requests_repo --cases benchmark/requests_cases.json
 python benchmark/run_benchmark.py --repo benchmark/requests_repo --cases benchmark/hard_cases.json
@@ -96,6 +96,14 @@ Try it by hand in any git repository:
 Limits: it only reads Markdown requirement files (change the list with `DRIFTAI_REQ_FILES`),
 pull requests from forks cannot receive comments (the result still appears in the job summary),
 and the matches are a checklist of places to look, not proof.
+
+## Suggested edits
+
+When a requirement change swaps one number for another (for example 20% to 30%), DriftAI shows the exact line that holds the old number and what it would look like with the new one, as a red and green diff with a "Copy as text" button.
+
+- Unit conversions are handled: a change from 10 minutes to 5 minutes turns `OTP_SECONDS = 600` into `300`.
+- It never edits your files. It only suggests.
+- It suggests edits only for strong (medium or high) matches. If no strong match is found, or the unit changed, it says so instead of guessing.
 
 ## Accuracy
 
