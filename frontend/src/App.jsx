@@ -1,8 +1,9 @@
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
-import { BarChart3, Braces, Folder, GitBranch, LayoutDashboard, LogOut, UserRound, Zap } from "lucide-react";
+import { BarChart3, Braces, FileClock, Folder, GitBranch, LayoutDashboard, LogOut, UserRound, Zap } from "lucide-react";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Analyze from "./pages/Analyze";
+import Versions from "./pages/Versions.jsx";
 import AnalysisPage from "./pages/AnalysisPage";
 import Functions from "./pages/Functions.jsx";
 import ImportGithub from "./pages/ImportGithub.jsx";
@@ -26,6 +27,7 @@ const NAV = [
   { to: "/projects", label: "Projects", icon: Folder },
   { to: "/import", label: "Import", icon: GitBranch },
   { to: "/analyze", label: "Analyze", icon: Zap },
+  { to: "/versions", label: "Versions", icon: FileClock },
   { to: "/functions", label: "Functions", icon: Braces },
   { to: "/insights", label: "Insights", icon: BarChart3 },
   { to: "/account", label: "Account", icon: UserRound },
@@ -69,6 +71,7 @@ function AppShell() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/import" element={<ImportGithub />} />
             <Route path="/analyze" element={<Analyze />} />
+            <Route path="/versions" element={<Versions />} />
             <Route path="/analysis/:id" element={<AnalysisPage />} />
             <Route path="/functions" element={<Functions />} />
             <Route path="/insights" element={<Insights />} />
