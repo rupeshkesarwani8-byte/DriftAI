@@ -93,5 +93,37 @@ def test_versions_are_private(env):
  
 def test_login_required(env):
     assert env[0].get("/projects/1/versions").status_code == 401
+
+
+def test_summary_lines_describe_the_change(env):
+    c, _ = env
+    t = signup(c, "a@x.io")
+    pid = make_project(c, t)
+    up(c, t, pid, "v1.txt", V1)
+    r = up(c, t, pid, "v2.txt", V2).json()
+    assert len(r["summary"]) == 1
+    assert "10" in r["summary"][0] and "5" in r["summary"][0]
+
+
+def test_only_latest_version_can_be_deleted(env):
+    c, _ = env
+    t = signup(c, "a@x.io")
+    pid = make_project(c, t)
+    v1 = up(c, t, pid, "v1.txt", V1).json()
+    v2 = up(c, t, pid, "v2.txt", V2).json()
+    assert c.delete(f"/projects/{pid}/versions/{v1['id']}", headers=t).status_code == 404
+    assert c.delete(f"/projects/{pid}/versions/{v2['id']}", headers=t).status_code == 204
+    assert c.get(f"/analyses/{v2['analysis_id']}", headers=t).status_code == 404
+    rows = c.get(f"/projects/{pid}/versions", headers=t).json()
+    assert [r["number"] for r in rows] == [1]
+    assert up(c, t, pid, "v2b.txt", V2).json()["number"] == 2
+
+
+def test_other_user_cannot_delete_version(env):
+    c, _ = env
+    a, b = signup(c, "a@x.io"), signup(c, "b@x.io")
+    pid = make_project(c, a)
+    v1 = up(c, a, pid, "v1.txt", V1).json()
+    assert c.delete(f"/projects/{pid}/versions/{v1['id']}", headers=b).status_code == 404
  
 

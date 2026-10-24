@@ -17,6 +17,28 @@ from ..services.risk import compute_risk
 from .projects import get_project_or_404
  
 router = APIRouter(prefix="/projects", tags=["versions"])
+
+def _short(text: str | None, limit: int = 110) -> str:
+    text = " ".join((text or "").split())
+    return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+def _summary(changes: list[dict], limit: int = 6) -> list[str]:
+    """One short human line per change, for the timeline."""
+    lines: list[str] = []
+    for item in changes[:limit]:
+        c = item["change"]
+        if c["type"] == "value_change":
+            lines.append(f"{c['entity']} {c['property']}: {c.get('old_value')} → {c.get('new_value')}")
+        elif c["type"] == "added":
+            lines.append("Added: " + _short(c.get("new_sentence")))
+        elif c["type"] == "removed":
+            lines.append("Removed: " + _short(c.get("old_sentence")))
+        else:
+            lines.append("Changed: " + _short(c.get("new_sentence")))
+    if len(changes) > limit:
+        lines.append(f"+ {len(changes) - limit} more")
+    return lines
  
  
 def _out(db: Session, v: RequirementVersion) -> VersionOut:
@@ -30,6 +52,7 @@ def _out(db: Session, v: RequirementVersion) -> VersionOut:
         out.file_count = analysis.file_count
         out.risk_score = risk.get("score")
         out.risk_level = risk.get("level")
+        out.summary = _summary((analysis.result or {}).get("changes") or [])
     return out
  
  
@@ -84,5 +107,21 @@ async def upload_version(
     db.commit()
     db.refresh(version)
     return _out(db, version)
+
+@router.delete("/{project_id}/versions/{version_id}", status_code=204)
+def delete_latest_version(
+    project_id: int, version_id: int, db: Session = Depends(get_db), user: dict = Depends(require_user)
+):
+    """Undo a wrong upload. Only the newest version can be removed, so the chain v1 -> v2 -> v3 stays valid."""
+    project = get_project_or_404(db, project_id, user)
+    latest = project.versions[-1] if project.versions else None
+    if latest is None or latest.id != version_id:
+        raise HTTPException(status_code=404, detail="Only the latest version can be deleted.")
+    if latest.analysis_id:
+        analysis = db.get(Analysis, latest.analysis_id)
+        if analysis is not None:
+            db.delete(analysis)
+    db.delete(latest)
+    db.commit()
  
 

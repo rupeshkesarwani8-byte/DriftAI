@@ -152,3 +152,4 @@ class VersionOut(BaseModel):
     file_count: int = 0
     risk_score: int | None = None
     risk_level: str | None = None
+    summary: list[str] = []
