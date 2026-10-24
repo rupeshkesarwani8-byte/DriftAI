@@ -145,3 +145,18 @@ Reproduce: `python benchmark/run_benchmark.py --repo benchmark/flask_repo --case
 ## Tech
 
 FastAPI, SQLAlchemy 2, SQLite, Pydantic v2, Python `ast`, React 19, Vite, React Router, React Flow (`@xyflow/react`), pytest.
+
+
+## Requirement Versions (built at SPIRIT 3.0 Round 2)
+
+Upload your requirement document as v1, v2, v3 (.txt, .md, .docx). Each new version is compared
+with the previous one by the existing DriftAI engine, and the result appears on a timeline with
+the changes, the affected code files and the risk. Each step opens the normal analysis page.
+
+- Backend: `backend/app/routers/versions.py`, `backend/app/services/docparse.py`
+- Frontend: `frontend/src/pages/Versions.jsx`
+- API: `POST/GET /projects/{id}/versions`, `DELETE /projects/{id}/versions/{version_id}` (latest only)
+- Tests: `backend/tests/test_docparse.py`, `backend/tests/test_versions_api.py`
+
+Limits: the tool only suggests code to review; it can miss changes where the requirement and the
+code use different words (e.g. "logged out" vs "idle").
