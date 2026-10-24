@@ -25,6 +25,9 @@ class Project(Base):
     analyses: Mapped[list["Analysis"]] = relationship(
         back_populates="project", cascade="all, delete-orphan"
     )
+    versions: Mapped[list["RequirementVersion"]] = relationship(
+        back_populates="project", cascade="all, delete-orphan", order_by="RequirementVersion.number"
+    )
 
 
 class CodeFile(Base):
@@ -67,3 +70,17 @@ class Feedback(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     analysis: Mapped["Analysis"] = relationship(back_populates="feedback")
+
+
+class RequirementVersion(Base):
+    __tablename__ = "requirement_versions"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), index=True)
+    number: Mapped[int] = mapped_column(Integer)
+    filename: Mapped[str] = mapped_column(String(300))
+    text: Mapped[str] = mapped_column(Text)
+    analysis_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+
+    project: Mapped["Project"] = relationship(back_populates="versions")

@@ -3,12 +3,12 @@ from fastapi import Depends, FastAPI
 
 from .deps import require_user
 from .routers import (
-    analyses, analysis_functions, analyze, auth, drift, functions, github, impact, projects, stats,
+    analyses, analysis_functions, analyze, auth, drift, functions, github, impact, projects, stats, versions,
 )
 
 # Every data route is protected. Only /auth/* (login, signup) and /health stay open.
 PROTECTED = [
-    projects.router, drift.router, impact.router, analyze.router, analyses.router,
+    projects.router, drift.router, impact.router, analyze.router, analyses.router, versions.router,
     analysis_functions.router, functions.router, github.router, stats.router,
 ]
 

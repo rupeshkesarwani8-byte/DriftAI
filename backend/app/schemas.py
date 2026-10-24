@@ -140,3 +140,15 @@ class AnalysisDetail(AnalysisSummary):
 class FeedbackIn(BaseModel):
     item_key: str = Field(min_length=1, max_length=600)
     verdict: Literal["relevant", "not_relevant", "none"]
+
+
+class VersionOut(BaseModel):
+    id: int
+    number: int
+    filename: str
+    created_at: datetime
+    analysis_id: int | None = None
+    change_count: int = 0
+    file_count: int = 0
+    risk_score: int | None = None
+    risk_level: str | None = None
